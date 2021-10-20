@@ -9,14 +9,13 @@ export function holaMundo(): string {
 // ------------------------- Métodos del smart contract de USUARIOS ------------------------- //
 
 // Método para registrar un nuevo usuario
-export function registrarUsuario(idCuenta: string, nombre: string, telefono: string, correo: string, password: string): void{
+export function registrarUsuario(idCuenta: string, nombre: string, telefono: string, correo: string): void{
   assert(idCuenta.length>0,"La cuenta a la que pertenece el usuario es requerida");
   assert(nombre.length>0 ,"El nombre es requerido");
   assert(telefono.length>0,"El teléfono es requerido");
   assert(correo.length>0,"El correo es requerido");
-  assert(password.length>0,"La contraseña es requerida");
 
-  let usuario = new Usuario(idCuenta, nombre, telefono, correo, password);
+  let usuario = new Usuario(idCuenta, nombre, telefono, correo);
   usuarios.push(usuario);
 }
 
@@ -25,7 +24,6 @@ export function consultarUsuarios(): Array<Usuario>{
   let result = new Array<Usuario>(usuarios.length);
   for (let i = 0; i < usuarios.length; i++){
     let usuario = usuarios[i];
-    usuario.password = '';
     result[i] = usuario;
   }
   return result;
@@ -37,7 +35,6 @@ export function consultarUsuario(idCuenta: string): Usuario | null {
   for (let i = 0; i < usuarios.length; i++) {
     if (usuarios[i].idUsuario == idCuenta) {
       let usuarioEncontrado = usuarios[i];
-      usuarioEncontrado.password = '';
       return usuarioEncontrado;
     }
   }

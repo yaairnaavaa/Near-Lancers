@@ -7,8 +7,8 @@ import './styles/style1.css'
 import getConfig from './config'
 const { networkId } = getConfig(process.env.NODE_ENV || 'development')
 
-export default function App() {
-  const [newService, setNewService] = useState({ nombre: "", descripcion: "", costo: ""});
+export default function registerProfile() {
+  const [newProfile, setNewProfile] = useState({ nombre: "", telefono: "", correo: ""});
 
   const [allServices, setAllServices] = useState([]);
   const [usuario, setUsuario] = useState([]);
@@ -22,7 +22,7 @@ export default function App() {
     e.preventDefault();
     console.log(newService);
     setUsuario(window.accountId);
-    window.contract.registrarServicio({nombre:newService.nombre, descripción:newService.descripcion, costo:newService.costo, idUsuario:usuario})
+    window.contract.registrarUsuario({nombre:newService.nombre, telefono:newService.descripcion, correo:newService.costo, idUsuario:usuario})
       .then(x => {
         console.log(x);
         window.location.reload()
@@ -33,17 +33,7 @@ export default function App() {
     () => {
       if (window.walletConnection.isSignedIn()) {
         setUsuario(window.accountId);
-        // window.contract.registrarServicio({nombre:"Limpieza domestica", descripción:"Se realiza todo tipo de limpieza", costo:"300", idUsuario:usuario})
-        //   .then(x => {
-        //     console.log(x);
-        // });
-
         window.contract.consultarUsuarios()
-          .then(x => {
-            console.log(x);
-        });
-
-        window.contract.consultarServicios()
           .then(s => {
             console.log(s);
             setAllServices(allServices => s);
@@ -73,9 +63,6 @@ export default function App() {
     <>
       <button className="link" style={{ float: 'right' }} onClick={logout}>
         Sign out
-      </button><br/>
-      <button className="link" style={{ float: 'right' }} onClick={() => window.location('profile')}>
-        Create Profile
       </button>
       <main style={{ color: "white", background: "black" }}>
         <h1>
@@ -83,21 +70,21 @@ export default function App() {
         </h1>
         <div style={{marginBottom: "10vh",color:"white"}}>
           <div className="form">
-            <div className="title">Create Service</div>
+            <div className="title">Create Profile</div>
             <div className="input-container ic1">
               <input onChange={onChange} name="nombre" className="input" type="text" placeholder=" " value={newService.nombre}/>
               <div className="cut"></div>
               <label htmlFor="firstname" className="placeholder">Name</label>
             </div>
             <div className="input-container ic2">
-              <input onChange={onChange} name="descripcion" className="input" type="text" placeholder=" " value={newService.descripcion}/>
+              <input onChange={onChange} name="telefono" className="input" type="text" placeholder=" " value={newService.telefono}/>
               <div className="cut"></div>
-              <label htmlFor="lastname" className="placeholder">Description</label>
+              <label htmlFor="lastname" className="placeholder">Phone</label>
             </div>
             <div className="input-container ic2">
-              <input onChange={onChange} name="costo" className="input" type="text" placeholder=" " value={newService.costo} />
+              <input onChange={onChange} name="correo" className="input" type="text" placeholder=" " value={newService.correo} />
               <div className="cut"></div>
-              <label htmlFor="lastname" className="placeholder">Cost</label>
+              <label htmlFor="lastname" className="placeholder">Email</label>
             </div>
             
             <button type="text" className="submit" onClick={saveNewToken}>Create</button>
@@ -107,8 +94,8 @@ export default function App() {
           {allServices.map((service) => (
             <div>
               <div>{service.nombre}</div>
-              <div>{service.descripcion}</div>
-              <div>$ {service.costo}</div><br></br>
+              <div>{service.telefono}</div>
+              <div>$ {service.correo}</div><br></br>
             </div>
           ))}
       </main>

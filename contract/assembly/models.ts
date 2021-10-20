@@ -7,14 +7,12 @@ export class Usuario {
     nombre: string;
     telefono: string;
     correo: string;
-    password: string;
     
-    constructor(idCuenta: string, nombre: string, telefono: string, correo: string, password: string){
+    constructor(idCuenta: string, nombre: string, telefono: string, correo: string){
         this.idUsuario = idCuenta;
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
-        this.password = password;
     }   
 }
 
